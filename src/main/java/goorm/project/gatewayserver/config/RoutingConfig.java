@@ -17,13 +17,22 @@ import java.util.Date;
                                 .path("/query-server/**")
                                 .filters(f -> f.rewritePath("/query-server/(?<segment>.*)", "/${segment}")
                                         .addResponseHeader("X-Response-Time", new Date().toString()))
-                                .uri("lb://QUERYSERVER")
+                                .uri("lb://QUERY-SERVER")
                         )
                         .route(p -> p
                                 .path("/authentication-server/**")
                                 .filters(f -> f.rewritePath("/authentication-server/(?<segment>.*)", "/${segment}")
                                         .addResponseHeader("X-Response-Time", new Date().toString()))
-                                .uri("lb://AUTHENTICATIONSERVER")
-                ).build();
+                                .uri("lb://AUTHENTICATION-SERVER")
+                )
+                        .route(p -> p
+                                .path("/news-write-server/**")
+                                .filters(f -> f.rewritePath("/news-write-server/(?<segment>.*)", "/${segment}")
+                                        .addResponseHeader("X-Response-Time", new Date().toString()))
+                                .uri("lb://NEWS-WRITE-SERVER")
+
+                        )
+
+                        .build();
     }
 }
