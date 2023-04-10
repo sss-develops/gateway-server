@@ -45,7 +45,7 @@ public class RoutingConfig {
         /**
          * todo: please 준우형~~
          */
-        return null;
+        return chain.filter(exchange);
     }
 
 }
