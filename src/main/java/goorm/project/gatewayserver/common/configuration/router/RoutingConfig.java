@@ -1,6 +1,8 @@
 package goorm.project.gatewayserver.common.configuration.router;
 
 import goorm.project.gatewayserver.business.web.client.redis.RedisSessionService;
+import goorm.project.gatewayserver.common.domain.error.CommonTypeException;
+import goorm.project.gatewayserver.common.exception.common.LoginForbiddenException;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -53,6 +55,9 @@ public class RoutingConfig {
 
     private Mono<Void> gatewayFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
         List<String> memberIds = exchange.getRequest().getHeaders().get(SET_COOKIE);
+        if (memberIds.isEmpty()) {
+            throw LoginForbiddenException.of(CommonTypeException.NOT_FOUND_SESSION_MEMBER);
+        }
         redisSessionService.isLoginUser(Long.parseLong(memberIds.get(0)));
 
         return chain.filter(exchange);
