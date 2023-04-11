@@ -17,10 +17,21 @@ ext {
 }
 
 dependencies {
+	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Spring Cloud
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+
+	// Redis
+	implementation('org.springframework.boot:spring-boot-starter-data-redis')
+	implementation(group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1')
+	implementation('org.redisson:redisson-spring-boot-starter:3.16.8')
+
+	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
